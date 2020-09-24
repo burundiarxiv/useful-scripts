@@ -37,6 +37,8 @@ class MainController extends Controller
 
         $sheet = $request['excelSheet'];
 
+        try {
+
         $reader = IOFactory::createReader('Xlsx');
         $reader->setReadDataOnly(TRUE);
         $spreadsheet = $reader->load($sheet);
@@ -219,5 +221,11 @@ class MainController extends Controller
         $writer->save($fileHere);
 
         return response()->download($fileHere, $finalFileName);
+
+    } catch(\Exception $exception)
+    {
+        dump($exception->getMessage());
+        dump($exception->getLine());
+    }
     }
 }
